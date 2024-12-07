@@ -151,9 +151,8 @@ export const validateSetVideo = (title: any, author: any, availableResolutions: 
 export const validateUpdateVideo = (title: any, author: any, availableResolutions: any, minAgeRestriction: any, canBeDownloaded: any, publicationDate: any): ItemErrorType[] => {
 
     let errors = [];
-
-    let errorTitle: any = title !== "undefined" ? validateVideoTitle(title) : null;
-    let errorAuthor: any = author !== "undefined"  ? validateVideoAuthor(author) : null
+    let errorTitle: any = title !== undefined ? validateVideoTitle(title) : null;
+    let errorAuthor: any = author !== undefined ? validateVideoAuthor(author) : null
     let errorResolutions: any = validateResolution(availableResolutions);
     let errorCanBeDownloaded: any = validateCanBeDownloaded(canBeDownloaded);
     let errorMinAgeRestriction: any = validateMinAgeRestriction(minAgeRestriction);
