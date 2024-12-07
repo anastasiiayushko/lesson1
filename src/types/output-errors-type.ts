@@ -1,5 +1,5 @@
  export type ItemErrorType = {
-    message: string, filed: string
+     message: string, field: string
 }
 
 export type OutputErrorsType = {

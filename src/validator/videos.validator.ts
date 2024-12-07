@@ -1,7 +1,8 @@
 import {Resolutions} from "../types/video-types";
+import {ItemErrorType} from "../types/output-errors-type";
 
-const validateVideoTitle = (title: any): any => {
-    if (!title) {
+const validateVideoTitle = (title: any): null | ItemErrorType => {
+    if (!title || !title.trim()) {
         return {
             field: 'title',
             message: 'Please enter a title',
@@ -14,7 +15,7 @@ const validateVideoTitle = (title: any): any => {
         }
     }
 
-    if (title.length > 40) {
+    if (title?.trim().length > 40) {
         return {
             field: 'title',
             message: 'Length should be less than 40 characters',
@@ -24,9 +25,9 @@ const validateVideoTitle = (title: any): any => {
 
 }
 
-const validateVideoAuthor = (author: any): any => {
+const validateVideoAuthor = (author: any): null | ItemErrorType => {
 
-    if (!author) {
+    if (!author || !author.trim()) {
         return {
             field: 'author',
             message: 'Please enter a author',
@@ -50,7 +51,7 @@ const validateVideoAuthor = (author: any): any => {
 
 }
 
-const validateResolution = (resolution: any): any => {
+const validateResolution = (resolution: any): null | ItemErrorType => {
     if (resolution === null || resolution === undefined) {
         return null;
     }
@@ -63,32 +64,29 @@ const validateResolution = (resolution: any): any => {
     return null;
 }
 
-const validateCanBeDownloaded = (canBeDownloaded: any) => {
-
+const validateCanBeDownloaded = (canBeDownloaded: any): null | ItemErrorType => {
     if (canBeDownloaded === undefined) {
         return null;
     }
 
-    // Проверяем, что значение является типом boolean
     if (typeof canBeDownloaded === 'boolean') {
         return null;
     }
 
     return {
         field: 'canBeDownloaded',
-        massage: 'Field should be boolean value',
+        message: 'Field should be boolean value',
     }
 }
 
-function validateMinAgeRestriction(minAgeRestriction: any) {
+function validateMinAgeRestriction(minAgeRestriction: any): null | ItemErrorType {
     if (minAgeRestriction === null || minAgeRestriction === undefined) {
         return null
     }
-    // Проверяем, что значение является типом boolean
     if (typeof minAgeRestriction !== 'number') {
         return {
             field: 'minAgeRestriction',
-            massage: 'Field should be value minimum:1, maximum:18 or null set no restriction',
+            message: 'Field should be value minimum:1, maximum:18 or null set no restriction',
         }
     }
     if (Number(minAgeRestriction) < 1) {
@@ -99,8 +97,8 @@ function validateMinAgeRestriction(minAgeRestriction: any) {
     }
     if (Number(minAgeRestriction) > 18) {
         return {
-            field: 'minAgeRestriction',
             message: `Maximum value 18`,
+            field: 'minAgeRestriction',
         }
     }
 
@@ -114,14 +112,14 @@ function validateDateFormatISO(value: any) {
     const regex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
     if (!regex.test(value)) {
         return {
-            field: 'publicationDate',
             message: `The date format is incorrect. Please use the format "YYYY-MM-DDTHH:MM:SS.sssZ" (e.g., 2024-12-05T12:48:53.477Z).`,
+            field: 'publicationDate',
         }
     }
     return null;
 }
 
-export const validateSetVideo = (title: any, author: any, availableResolutions: any, minAgeRestriction: any, canBeDownloaded: any): any => {
+export const validateSetVideo = (title: any, author: any, availableResolutions: any, minAgeRestriction: any, canBeDownloaded: any): ItemErrorType[] => {
 
     let errors = [];
 
@@ -150,12 +148,12 @@ export const validateSetVideo = (title: any, author: any, availableResolutions: 
     return errors;
 }
 
-export const validateUpdateVideo = (title: any, author: any, availableResolutions: any, minAgeRestriction: any, canBeDownloaded: any, publicationDate: any): any => {
+export const validateUpdateVideo = (title: any, author: any, availableResolutions: any, minAgeRestriction: any, canBeDownloaded: any, publicationDate: any): ItemErrorType[] => {
 
     let errors = [];
 
-    let errorTitle: any = title ? validateVideoTitle(title) : null;
-    let errorAuthor: any = author ? validateVideoAuthor(author) : null
+    let errorTitle: any = title !== "undefined" ? validateVideoTitle(title) : null;
+    let errorAuthor: any = author !== "undefined"  ? validateVideoAuthor(author) : null
     let errorResolutions: any = validateResolution(availableResolutions);
     let errorCanBeDownloaded: any = validateCanBeDownloaded(canBeDownloaded);
     let errorMinAgeRestriction: any = validateMinAgeRestriction(minAgeRestriction);

@@ -1,7 +1,7 @@
 import {Request, Response} from 'express';
 import {SETTINGS_STATUS_CODE} from "../settings";
 import {db} from "../db/db";
-import {InputUpdateVideoType, InputVideoType, VideoType} from "../types/video-types";
+import {UpdateInputVideoModel, CreateInputVideoModel, VideoType} from "../types/video-types";
 import {OutputErrorsType} from "../types/output-errors-type";
 
 
@@ -17,7 +17,7 @@ export const getVideosController = async (
 }
 
 export const setVideoController = (
-    req: Request<{}, {}, InputVideoType>,
+    req: Request<{}, {}, CreateInputVideoModel>,
     res: Response<VideoType | OutputErrorsType>) => {
     try {
         let errors = res.locals.errors;
@@ -70,7 +70,7 @@ export const deleteVideoByIdController = (
 }
 
 export const updateVideoByIdController =
-    (req: Request<{ id: string }, {}, InputUpdateVideoType>,
+    (req: Request<{ id: string }, {}, UpdateInputVideoModel>,
      res: Response<OutputErrorsType>): any => {
         try {
             let errors = res.locals.errors;
@@ -87,7 +87,7 @@ export const updateVideoByIdController =
                 return
             }
 
-            let bodyVideoDate = {
+            let bodyVideoDate:object = {
                 title: req.body.title,
                 author: req.body.author,
                 canBeDownloaded: req.body.canBeDownloaded,

@@ -22,14 +22,14 @@ export type VideoType = {
     publicationDate: string,
 }
 
-export type InputVideoType = {
+export type CreateInputVideoModel = {
     title: string
     author: string
     canBeDownloaded?: boolean,
     minAgeRestriction?: number | null,
     availableResolutions?: AvailableResolutionsType,
 }
-export type InputUpdateVideoType = {
+export type UpdateInputVideoModel = {
     title: string
     author: string
     canBeDownloaded?: boolean,

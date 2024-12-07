@@ -3,7 +3,7 @@ import {config} from "dotenv";
 config();
 
 export const SETTINGS_CONFIG = {
-    PORT: process.env.PORT || 3000,
+    PORT: process.env.PORT || 3001,
     PATH: {
         VIDEOS: "/videos",
     }

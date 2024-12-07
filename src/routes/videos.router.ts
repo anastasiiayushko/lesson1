@@ -1,4 +1,4 @@
-import express, {Request, Response, NextFunction} from "express";
+import express, {NextFunction, Request, Response} from "express";
 import {
     deleteVideoByIdController,
     getVideosController,
@@ -6,7 +6,7 @@ import {
     updateVideoByIdController
 } from "../controller/videos.controller";
 import {validateSetVideo, validateUpdateVideo} from "../validator/videos.validator";
-import {InputVideoType} from "../types/video-types";
+import {CreateInputVideoModel, UpdateInputVideoModel} from "../types/video-types";
 import {ItemErrorType} from "../types/output-errors-type";
 
 
@@ -16,7 +16,7 @@ const videosRouter = express.Router();
 videosRouter.get("/", getVideosController);
 
 videosRouter.post("/", (
-    req:Request<{}, {}, InputVideoType>,
+    req:Request<{}, {}, CreateInputVideoModel>,
     res:Response<{}, {errors:ItemErrorType[] }>, next:NextFunction) => {
     let body = req.body;
     let title = body.title;
@@ -30,7 +30,9 @@ videosRouter.post("/", (
 },
     setVideoController);
 
-videosRouter.put("/:id", (req, res, next) => {
+videosRouter.put("/:id", (req:Request<{id:string}, {}, UpdateInputVideoModel>,
+                          res:Response<{}, {errors:ItemErrorType[]}>,
+                          next) => {
     let body = req.body;
     let title = body.title;
     let author = body.author;

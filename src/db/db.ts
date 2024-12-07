@@ -7,7 +7,7 @@ export const db: DBType = {
     videos: []
 }
 
-export const setDB = (dataset: Partial<DBType>) => {
+export const setDB = (dataset: Partial<DBType> | null) => {
     if (!dataset) {
         db.videos = [];
         return;
