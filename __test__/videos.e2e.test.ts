@@ -9,7 +9,7 @@ describe("videos", () => {
     beforeAll(async () => {
         newlyVideo = null;
        await request(app)
-           .get('/testing/all-data')
+           .delete('/testing/all-data')
            .expect(204)
 
         await request(app)

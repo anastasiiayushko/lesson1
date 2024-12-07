@@ -7,7 +7,7 @@ export const app = express();
 
 app.use(express.json());
 
-app.get('/testing/all-data', (req, res)=>{
+app.delete('/testing/all-data', (req, res)=>{
     setDB(null)
     res.sendStatus(SETTINGS_STATUS_CODE.NO_CONTENT_204)
 })
