@@ -6,9 +6,15 @@ describe("videos", () => {
     let newlyVideo: any = null;
 
     const longText = "This is a very long string that exceeds the length limit.";
-    beforeAll(() => {
+    beforeAll(async () => {
         newlyVideo = null;
-        setDB(null);
+       await request(app)
+           .get('/testing/all-data')
+           .expect(204)
+
+        await request(app)
+            .get('/videos')
+            .expect(200, [])
     })
 
     it('Get  videos, should be empty array and status 200', async () => {
@@ -16,6 +22,11 @@ describe("videos", () => {
             .expect(200, [])
 
     });
+
+    it('Get non-existing video by id. Should be status code 404', async ()=>{
+        await request(app).get('/videos/1000')
+            .expect(404)
+    })
 
     it('Create video, empty body. Should be status code 400 and response errorsMessage',
         async () => {

@@ -16,6 +16,18 @@ export const getVideosController = async (
     }
 }
 
+export const getVideosByIdController = async (
+    req: Request<{ id: string }>,
+    res: Response<VideoType>) => {
+    let id = +req.params.id;
+    let video = db.videos.find(item => Number(item.id) === id);
+    if (!video) {
+        res.sendStatus(404);
+        return
+    }
+    res.status(SETTINGS_STATUS_CODE.OK_200).json(video)
+}
+
 export const setVideoController = (
     req: Request<{}, {}, CreateInputVideoModel>,
     res: Response<VideoType | OutputErrorsType>) => {
@@ -87,7 +99,7 @@ export const updateVideoByIdController =
                 return
             }
 
-            let bodyVideoDate:object = {
+            let bodyVideoDate: object = {
                 title: req.body.title,
                 author: req.body.author,
                 canBeDownloaded: req.body.canBeDownloaded,
