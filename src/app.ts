@@ -9,6 +9,6 @@ app.use(express.json());
 
 app.use('/videos', videosRouter);
 
-app.use('/', (req: Request, res: Response) => {
-    res.send(SETTINGS_STATUS_CODE.NO_CONTENT_204);
+app.get('/', (req: Request, res: Response) => {
+    res.send()
 });
